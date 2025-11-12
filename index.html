@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bún Thịt Nướng BaMa - Hương vị truyền thống Việt Nam với nguyên liệu tươi ngon và công thức gia truyền.">
+    <title>Bún Thịt Nướng BaMa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff6b35;
+            --secondary: #f7931e;
+            --dark: #1a1a2e;
+            --light: #fff8f0;
+            --text: #333;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* HEADER */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .header.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            transition: all 0.3s;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            overflow: hidden;
+        }
+
+        .hero-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-50px) rotate(180deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            max-width: 900px;
+            padding: 0 2rem;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* PRODUCTS SECTION */
+        .products {
+            padding: 8rem 2rem;
+            background: var(--light);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 300;
+        }
+
+        .search-filter-container {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1.2rem 3rem 1.2rem 1.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.1);
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            border: 2px solid var(--primary);
+            background: white;
+            color: var(--primary);
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .products-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(255, 107, 53, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.1);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* WHY CHOOSE */
+        .why-choose {
+            padding: 8rem 2rem;
+            background: white;
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--light);
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 5rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 107, 53, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* FLOATING BUTTONS */
+        .floating-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 999;
+        }
+
+        .float-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.4);
+            transition: all 0.3s;
+            font-size: 1.5rem;
+        }
+
+        .float-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.6);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .floating-buttons {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .float-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo"><img src="image/logo.png"></div>
+            <ul class="nav-links">
+                <li><a href="#home">Trang Chủ</a></li>
+                <li><a href="#products">Thực Đơn</a></li>
+                <li><a href="#why-choose">Giới Thiệu</a></li>
+                <li><a href="#contact">Liên Hệ</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="hero-particles">
+            <div class="particle" style="width: 80px; height: 80px; left: 10%; top: 20%;"></div>
+            <div class="particle" style="width: 60px; height: 60px; left: 80%; top: 30%; animation-delay: 2s;"></div>
+            <div class="particle" style="width: 100px; height: 100px; left: 60%; top: 60%; animation-delay: 4s;"></div>
+            <div class="particle" style="width: 70px; height: 70px; left: 20%; top: 70%; animation-delay: 1s;"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">Bún Thịt Nướng BaMa</h1>
+            <p class="hero-subtitle">Hương vị truyền thống - Đẳng cấp hiện đại</p>
+            <a href="#products" class="cta-button">Khám Phá Thực Đơn</a>
+        </div>
+    </section>
+
+    <!-- PRODUCTS SECTION -->
+    <section class="products" id="products">
+        <div class="section-header">
+            <h2 class="section-title">Thực Đơn Hôm Nay</h2>
+            <p class="section-subtitle">Những món ăn đặc sắc từ công thức gia truyền</p>
+        </div>
+
+        <div class="search-filter-container">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Tìm kiếm món ăn...">
+            </div>
+
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Tất Cả</button>
+                <button class="filter-btn" data-filter="bun-thit-nuong">Bún Thịt Nướng</button>
+                <button class="filter-btn" data-filter="combo">Combo</button>
+                <button class="filter-btn" data-filter="com-chien">Cơm Chiên</button>
+                <button class="filter-btn" data-filter="dothem">Đồ Thêm</button>
+                <button class="filter-btn" data-filter="nuocngot">Nước Ngọt</button>
+            </div>
+        </div>
+
+        <div class="products-grid">
+    <!-- Product 1 -->
+    <div class="product-card" data-category="bun-thit-nuong">
+        <img src="/food/uploads/product/68f2f94202132-anhsanphambunthitnuong.jpg" alt="Bún Thịt Nướng" class="product-image">
+        <span class="product-badge">Phổ Biến</span>
+        <div class="product-info">
+            <h3 class="product-name">Bún Thịt Nướng</h3>
+            <p class="product-price">38,000 VNĐ</p>
+        </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product-card" data-category="bun-thit-nuong">
+        <img src="/food/uploads/product/68f2f9610e966-bunthitnuongbama.jpg" alt="Bún Thịt Nướng Chả Giò" class="product-image">
+        <span class="product-badge">Phổ Biến</span>
+        <div class="product-info">
+            <h3 class="product-name">Bún Thịt Nướng Chả Giò</h3>
+            <p class="product-price">35,000 VNĐ</p>
+        </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product-card" data-category="bun-thit-nuong">
+        <img src="/food/uploads/product/68f2f979a1ffb-bunthitnuongbama1.jpg" alt="Bún Thịt Nướng Đầy Đủ" class="product-image">
+        <span class="product-badge">Phổ Biến</span>
+        <div class="product-info">
+            <h3 class="product-name">Bún Thịt Nướng Đầy Đủ</h3>
+            <p class="product-price">35,000 VNĐ</p>
+        </div>
+    </div>
+
+    <!-- Product 4 -->
+    <div class="product-card" data-category="combo">
+        <img src="/food/uploads/product/68f2fa811e807-bunthitnuongbama.png" alt="Combo 3 Bún Thịt" class="product-image">
+        <span class="product-badge">Mới</span>
+        <div class="product-info">
+            <h3 class="product-name">Combo 3 Bún Thịt</h3>
+            <p class="product-price">100,000 VNĐ</p>
+        </div>
+    </div>
+
+    <!-- Product 5 -->
+    <div class="product-card" data-category="dothem">
+        <img src="/food/uploads/product/68f2fbc8cab7e-z7110859099691_77b7f336838dc4ee3e9b35d050110b1d.jpg" alt="Chả Giò Thêm" class="product-image">
+        <div class="product-info">
+            <h3 class="product-name">Chả Giò Thêm</h3>
+            <p class="product-price">5,000 VNĐ</p>
+        </div>
+    </div>
+
+    <!-- Product 6 -->
+    <div class="product-card" data-category="dothem">
+        <img src="/food/uploads/product/68f2fc071923c-bunthem.jpg" alt="Bún Thêm" class="product-image">
+        <span class="product-badge">Mới</span>
+        <div class="product-info">
+            <h3 class="product-name">Bún Thêm</h3>
+            <p class="product-price">5,000 VNĐ</p>
+        </div>
+    </div>
+
+    <!-- Product 7 -->
+    <div class="product-card" data-category="dothem">
+        <img src="/food/uploads/product/68f2fc7585453-bunthitnuongbama1.jpg" alt="Thịt Thêm" class="product-image">
+        <span class="product-badge">Mới</span>
+        <div class="product-info">
+            <h3 class="product-name">Thịt Thêm</h3>
+            <p class="product-price">15,000 VNĐ</p>
+        </div>
+    </div>
+
+    <!-- Product 8 -->
+    <div class="product-card" data-category="nuocngot">
+        <img src="/food/uploads/product/68f2fd3327e36-cocabunthitnuong.jpg" alt="Coca-Cola" class="product-image">
+        <span class="product-badge">Mới</span>
+        <div class="product-info">
+            <h3 class="product-name">Coca-Cola</h3>
+            <p class="product-price">15,000 VNĐ</p>
+        </div>
+    </div>
+
+    <!-- Product 9 -->
+    <div class="product-card" data-category="nuocngot">
+        <img src="/food/uploads/product/68f2fd409c905-download.jpg" alt="Pepsi" class="product-image">
+        <span class="product-badge">Mới</span>
+        <div class="product-info">
+            <h3 class="product-name">Pepsi</h3>
+            <p class="product-price">15,000 VNĐ</p>
+        </div>
+    </div>
+
+    <!-- Product 10 -->
+    <div class="product-card" data-category="com-chien">
+        <img src="/food/uploads/product/68f2fe26a4eb4-comchien.jpg" alt="Cơm Chiên Dương Châu" class="product-image">
+        <span class="product-badge">Mới</span>
+        <div class="product-info">
+            <h3 class="product-name">Cơm Chiên Dương Châu</h3>
+            <p class="product-price">35,000 VNĐ</p>
+        </div>
+    </div>
+
+    <!-- Product 11 -->
+    <div class="product-card" data-category="com-chien">
+        <img src="/food/uploads/product/68f2fe3ac7844-comchienduiga.jpg" alt="Cơm Chiên Đùi Gà" class="product-image">
+        <span class="product-badge">Mới</span>
+        <div class="product-info">
+            <h3 class="product-name">Cơm Chiên Đùi Gà</h3>
+            <p class="product-price">38,000 VNĐ</p>
+        </div>
+    </div>
+
+    <!-- Product 12 -->
+    <div class="product-card" data-category="nuocngot">
+        <img src="/food/uploads/product/68f2fe626fbe3-stingbunthitnuongbama.jpg" alt="Sting" class="product-image">
+        <div class="product-info">
+            <h3 class="product-name">Sting</h3>
+            <p class="product-price">15,000 VNĐ</p>
+        </div>
+    </div>
+</div>
+    </section>
+
+    <!-- WHY CHOOSE SECTION -->
+    <section class="why-choose" id="why-choose">
+        <div class="section-header">
+            <h2 class="section-title">Tại Sao Chọn BaMa?</h2>
+            <p class="section-subtitle">Cam kết chất lượng và phục vụ tận tâm</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔥</div>
+                <h3 class="feature-title">Thịt Nướng Ngon</h3>
+                <p class="feature-description">Thịt được ướp công thức bí truyền và nướng thủ công trên than hoa</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🥬</div>
+                <h3 class="feature-title">Nguyên Liệu Tươi</h3>
+                <p class="feature-description">Rau củ sạch, thịt hữu cơ được chọn lọc kỹ càng mỗi ngày</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3 class="feature-title">Giao Hàng Nhanh</h3>
+                <p class="feature-description">Cam kết giao hàng nóng hổi trong vòng 30 phút</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">👨‍🍳</div>
+                <h3 class="feature-title">Công Thức Gia Truyền</h3>
+                <p class="feature-description">Hương vị được truyền lại qua 10 năm kinh nghiệm</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Liên Hệ</h3>
+                <p>📞 052.8934.340</p>
+                <p>⏰ Mở cửa: 15:00 - 22:00</p>
+                <p>✉️ support@bama.vn</p>
+                <p>📍 45/25/20/41B Trần Thái Tông, TPHCM</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">f</a>
+                    <a href="#" class="social-link">📷</a>
+                    <a href="#" class="social-link">🎵</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Đường Dẫn Nhanh</h3>
+                <a href="#home">Trang Chủ</a>
+                <a href="#products">Thực Đơn</a>
+                <a href="#why-choose">Giới Thiệu</a>
+                <a href="#contact">Liên Hệ</a>
+            </div>
+
+            <div class="footer-section">
+                <h3>Giờ Mở Cửa</h3>
+                <p>Thứ 2 - Chủ Nhật</p>
+                <p>15:00 - 22:00</p>
+                <p style="margin-top: 1.5rem; font-weight: 600; color: var(--primary);">Đặt hàng qua:</p>
+                <p>🛵 Grab | Be | ShopeeFood</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Về Chúng Tôi</h3>
+                <p>Bún Thịt Nướng BaMa tự hào mang đến hương vị truyền thống Việt Nam với công thức gia truyền độc đáo.</p>
+                <p style="margin-top: 1rem;">Mỗi món ăn đều được chế biến tận tâm từ nguyên liệu tươi ngon nhất.</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 Bún Thịt Nướng BaMa. Được làm với ❤️ tại Sài Gòn</p>
+        </div>
+    </footer>
+
+    <!-- FLOATING BUTTONS -->
+    <div class="floating-buttons">
+        <a href="tel:0528934340" class="float-btn" title="Gọi ngay">📞</a>
+        <a href="#" class="float-btn" title="Grab">🛵</a>
+        <a href="#" class="float-btn" title="ShopeeFood">🍜</a>
+    </div>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const productCards = document.querySelectorAll('.product-card');
+        const searchInput = document.getElementById('searchInput');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const filter = btn.dataset.filter;
+
+                productCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'scale(1)';
+                        }, 10);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+
+            productCards.forEach(card => {
+                const productName = card.querySelector('.product-name').textContent.toLowerCase();
+                
+                if (productName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'scale(1)';
+                    }, 10);
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
+                }
+            });
+
+            // Reset filter buttons
+            if (searchTerm) {
+                filterBtns.forEach(b => b.classList.remove('active'));
+            }
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe product cards and feature cards
+        document.querySelectorAll('.product-card, .feature-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease-out';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
