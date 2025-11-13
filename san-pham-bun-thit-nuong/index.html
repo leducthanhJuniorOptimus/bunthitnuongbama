@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tất cả món ăn Bún Thịt Nướng BaMa - Bún thịt nướng, bún đặc biệt, cơm chiên. Đặt hàng online, giao tận nơi.">
+    <title>Thực Đơn | Bún Thịt Nướng BaMa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/food/image/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --primary: #ff6b35;
+            --secondary: #f7931e;
+            --dark: #1a1a2e;
+            --light: #fff8f0;
+            --text: #333;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background: #fff;
+            overflow-x: hidden;
+        }
+
+        /* HEADER */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        .header.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo img {
+            height: 50px;
+            object-fit: contain;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .cart-icon-wrapper {
+            position: relative;
+            cursor: pointer;
+        }
+        .cart-icon {
+            font-size: 1.5rem;
+            color: var(--text);
+            transition: all 0.3s;
+        }
+        .cart-icon:hover {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 18px;
+            text-align: center;
+        }
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            transition: all 0.3s;
+        }
+
+        /* HERO */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.85), rgba(22, 33, 62, 0.75));
+            z-index: 2;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: white;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+        .hero-btn {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 2rem;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+        .hero-btn:hover {
+            transform: translate  translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* PRODUCTS SECTION */
+        .products-section {
+            padding: 120px 5%;
+            background: linear-gradient(to bottom, white, #fff5f0);
+            position: relative;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: #2d3748;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0;
+        }
+        .filter-btn {
+            padding: 12px 30px;
+            border: 2px solid var(--primary);
+            background: white;
+            color: var(--primary);
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: all 0.5s ease;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        }
+        .filter-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        .filter-btn:hover {
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 107, 53, 0.3);
+        }
+        .filter-btn.active {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(255, 107, 53, 0.4);
+        }
+        .filter-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+        .menu-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .menu-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.2);
+        }
+        .card-img-wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 220px;
+            flex-shrink: 0;
+        }
+        .card-img-top {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .menu-card:hover .card-img-top {
+            transform: scale(1.15) rotate(2deg);
+        }
+        .card-img-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .menu-card:hover .card-img-wrapper::after {
+            opacity: 1;
+        }
+        .special-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 2;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .card-body {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+        .menu-card:hover .card-title {
+            color: var(--primary);
+        }
+        .card-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .btn-add-to-cart {
+            margin-top: auto;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-add-to-cart::before {
+            content: 'Cart';
+            position: absolute;
+            left: -30px;
+            transition: all 0.3s ease;
+        }
+        .btn-add-to-cart:hover::before {
+            left: 15px;
+        }
+        .btn-add-to-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+            padding-left: 40px;
+        }
+
+        .product-item.hidden {
+            display: none;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 5rem 2rem 2rem;
+            margin-top: 100px;
+        }
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .footer-section a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+        }
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .menu-toggle { display: flex; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .section-title { font-size: 2.5rem; }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+        }
+        @media (max-width: 576px) {
+            .hero-content h1 { font-size: 2rem; }
+            .products-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <img src="/food/image/logo.png" alt="Bún Thịt Nướng BaMa Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Trang Chủ</a></li>
+                <li><a href="products.html">Thực Đơn</a></li>
+                <li><a href="about.html">Giới Thiệu</a></li>
+                <li><a href="contact.html">Liên Hệ</a></li>
+                <li>
+                    <div class="cart-icon-wrapper" onclick="showCart()">
+                        <i class="fas fa-shopping-cart cart-icon"></i>
+                        <span class="cart-badge" id="cartCount">0</span>
+                    </div>
+                </li>
+            </ul>
+            <button class="menu-toggle" onclick="toggleMobileMenu()">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero-section">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="/food/video/videosanpham.mp4" type="video/mp4">
+            Trình duyệt không hỗ trợ video.
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Tất Cả Sản Phẩm Bún Thịt Nướng BaMa</h1>
+            <p>Khám phá thực đơn đa dạng, thơm ngon</p>
+            <a href="#products" class="hero-btn">Xem Tất Cả Sản Phẩm</a>
+        </div>
+    </section>
+
+    <!-- PRODUCTS SECTION -->
+    <section class="products-section" id="products">
+        <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
+            <div class="text-center">
+                <h2 class="section-title">Tất Cả Sản Phẩm</h2>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all"><span>Noodles Tất Cả</span></button>
+                <button class="filter-btn" data-filter="bun-thit-nuong"><span>Chopsticks Bún Thịt Nướng</span></button>
+                <button class="filter-btn" data-filter="bun-dac-biet"><span>Star Bún Đặc Biệt</span></button>
+                <button class="filter-btn" data-filter="com-chien"><span>Bowl Cơm Chiên</span></button>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="productsGrid">
+                <!-- Sản phẩm sẽ được thêm bằng JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Liên Hệ</h3>
+                <p>052.8934.340</p>
+                <p>Clock Mở cửa: 15:00 - 22:00</p>
+                <p>support@bama.vn</p>
+                <p>45/25/20/41B Trần Thái Tông, TPHCM</p>
+            </div>
+            <div class="footer-section">
+                <h3>Đường Dẫn Nhanh</h3>
+                <a href="index.html">Trang Chủ</a>
+                <a href="products.html">Thực Đơn</a>
+                <a href="about.html">Giới Thiệu</a>
+                <a href="contact.html">Liên Hệ</a>
+            </div>
+            <div class="footer-section">
+                <h3>Giờ Mở Cửa</h3>
+                <p>Thứ 2 - Chủ Nhật</p>
+                <p>15:00 - 22:00</p>
+                <p style="margin-top: 1.5rem; color: var(--primary);">Đặt hàng qua:</p>
+                <p>Grab | Be | ShopeeFood</p>
+            </div>
+            <div class="footer-section">
+                <h3>Về Chúng Tôi</h3>
+                <p>Bún Thịt Nướng BaMa tự hào mang đến hương vị truyền thống Việt Nam với công thức gia truyền độc đáo.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Bún Thịt Nướng BaMa. Được làm với Heart tại Sài Gòn</p>
+        </div>
+    </footer>
+
+    <!-- CART MODAL & TOAST -->
+    <div class="modal fade" id="cartModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Giỏ Hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="cartItems">
+                    <p class="text-center text-muted">Giỏ hàng trống.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger w-100" id="checkoutBtn">Đặt Hàng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed top-0 end-0 p-3" id="toastContainer"></div>
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Dữ liệu sản phẩm (dễ chỉnh sửa)
+        const products = [
+            { name: "Bún Thịt Nướng Đặc Biệt", price: 55000, category: "bun-dac-biet", image: "bun-dac-biet.jpg", is_special: true },
+            { name: "Bún Thịt Nướng Truyền Thống", price: 45000, category: "bun-thit-nuong", image: "bun-thit-nuong.jpg", is_special: true },
+            { name: "Bún Thịt Nướng Tôm", price: 60000, category: "bun-thit-nuong", image: "bun-tom.jpg", is_special: false },
+            { name: "Bún Thịt Nướng Bò", price: 65000, category: "bun-thit-nuong", image: "bun-bo.jpg", is_special: false },
+            { name: "Cơm Chiên Dương Châu", price: 50000, category: "com-chien", image: "com-chien.jpg", is_special: true },
+            { name: "Cơm Chiên Hải Sản", price: 70000, category: "com-chien", image: "com-hai-san.jpg", is_special: false },
+            { name: "Bún Đặc Biệt Full Topping", price: 75000, category: "bun-dac-biet", image: "bun-full.jpg", is_special: true },
+            { name: "Bún Thịt Nướng Nem", price: 58000, category: "bun-thit-nuong", image: "bun-nem.jpg", is_special: false }
+        ];
+
+        // Render sản phẩm
+        function renderProducts(filter = 'all') {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+            const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+            
+            filtered.forEach((product, index) => {
+                const item = document.createElement('div');
+                item.className = `menu-card product-item`;
+                item.dataset.category = product.category;
+                item.style.animationDelay = `${0.1 + index * 0.1}s`;
+                
+                item.innerHTML = `
+                    <div class="card-img-wrapper">
+                        <img src="/food/uploads/product/${product.image}" alt="${product.name}" class="card-img-top">
+                        ${product.is_special ? `<span class="special-badge">${product.category === 'bun-dac-biet' ? 'Special' : (product.category === 'bun-thit-nuong' ? 'Popular' : 'New')}</span>` : ''}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">${product.name}</h5>
+                        <p class="card-text">${formatVND(product.price)}</p>
+                        <button class="btn-add-to-cart" onclick="addToCart('${product.name}', ${product.price})">Thêm vào giỏ</button>
+                    </div>
+                `;
+                grid.appendChild(item);
+            });
+        }
+
+        // Lọc sản phẩm
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderProducts(btn.dataset.filter);
+            });
+        });
+
+        // Giỏ hàng
+        const CART_KEY = 'bama_cart';
+        let cart = JSON.parse(localStorage.getItem(CART_KEY)) || { items: [], total: 0 };
+
+        function updateCartBadge() {
+            const count = cart.items.reduce((s, i) => s + i.qty, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        function addToCart(name, price) {
+            const existing = cart.items.find(i => i.name === name);
+            if (existing) existing.qty++;
+            else cart.items.push({ name, price, qty: 1 });
+            cart.total = cart.items.reduce((s, i) => s + i.price * i.qty, 0);
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+            updateCartBadge();
+            showToast('Đã thêm vào giỏ hàng!');
+        }
+
+        function showCart() {
+            const itemsDiv = document.getElementById('cartItems');
+            itemsDiv.innerHTML = '';
+            if (cart.items.length === 0) {
+                itemsDiv.innerHTML = '<p class="text-center text-muted">Giỏ hàng trống.</p>';
+            } else {
+                cart.items.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'd-flex justify-content-between align-items-center py-2 border-bottom';
+                    div.innerHTML = `
+                        <div><strong>${item.name}</strong><br><small>${item.qty} x ${formatVND(item.price)}</small></div>
+                        <div class="text-end"><strong>${formatVND(item.price * item.qty)}</strong><br>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="changeQty('${item.name}', -1)">-</button>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="changeQty('${item.name}', 1)">+</button>
+                            <button class="btn btn-sm btn-link text-danger" onclick="removeItem('${item.name}')">x</button>
+                        </div>`;
+                    itemsDiv.appendChild(div);
+                });
+                const total = document.createElement('div');
+                total.className = 'mt-3 text-end';
+                total.innerHTML = `<strong>Tổng: ${formatVND(cart.total)}</strong>`;
+                itemsDiv.appendChild(total);
+            }
+            new bootstrap.Modal(document.getElementById('cartModal')).show();
+        }
+
+        function changeQty(name, delta) {
+            const item = cart.items.find(i => i.name === name);
+            if (item) {
+                item.qty = Math.max(0, item.qty + delta);
+                if (item.qty === 0) cart.items = cart.items.filter(i => i.name !== name);
+                cart.total = cart.items.reduce((s, i) => s + i.price * i.qty, 0);
+                localStorage.setItem(CART_KEY, JSON.stringify(cart));
+                updateCartBadge();
+                showCart();
+            }
+        }
+
+        function removeItem(name) {
+            cart.items = cart.items.filter(i => i.name !== name);
+            cart.total = cart.items.reduce((s, i) => s + i.price * i.qty, 0);
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+            updateCartBadge();
+            showCart();
+        }
+
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            if (cart.items.length === 0) return showToast('Giỏ hàng trống!');
+            showToast('Đặt hàng thành công!');
+            cart = { items: [], total: 0 };
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+            updateCartBadge();
+            bootstrap.Modal.getInstance(document.getElementById('cartModal')).hide();
+        });
+
+        function showToast(msg) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast align-items-center text-white bg-success border-0';
+            toast.innerHTML = `<div class="d-flex"><div class="toast-body">${msg}</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button></div>`;
+            container.appendChild(toast);
+            new bootstrap.Toast(toast).show();
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function formatVND(n) {
+            return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + 'đ';
+        }
+
+        function toggleMobileMenu() {
+            const nav = document.querySelector('.nav-links');
+            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        window.addEventListener('scroll', () => {
+            document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Khởi tạo
+        renderProducts();
+        updateCartBadge();
+    </script>
+</body>
+</html>
