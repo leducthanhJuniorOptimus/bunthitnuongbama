@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="/food/image/logo.png">
+    <link rel="icon" type="image/png" href="../image/logo.png">
     <style>
         * {
             margin: 0;
@@ -29,7 +29,7 @@
             overflow-x: hidden;
         }
 
-        /* HEADER */
+        /* HEADER DESKTOP */
         .header {
             position: fixed;
             top: 0;
@@ -80,10 +80,12 @@
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             transition: width 0.3s;
         }
-        .nav-links a:hover {
+        .nav-links a:hover,
+        .nav-links a.active {
             color: var(--primary);
         }
-        .nav-links a:hover::after {
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
             width: 100%;
         }
         .cart-icon-wrapper {
@@ -112,19 +114,178 @@
             min-width: 18px;
             text-align: center;
         }
-        .menu-toggle {
+
+        /* MOBILE HEADER */
+        .mobile-header {
             display: none;
-            flex-direction: column;
-            gap: 5px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            z-index: 1000;
+            padding: 1rem 1.5rem;
+        }
+        .mobile-nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .mobile-logo img {
+            height: 40px;
+            object-fit: contain;
+        }
+        .mobile-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .mobile-cart-icon {
+            position: relative;
+            font-size: 1.3rem;
+            color: var(--text);
             cursor: pointer;
+        }
+        .hamburger-btn {
             background: none;
             border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 1001;
         }
-        .menu-toggle span {
-            width: 25px;
+        .hamburger-btn span {
+            width: 28px;
             height: 3px;
             background: var(--primary);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        .hamburger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* MOBILE MENU SIDEBAR */
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .mobile-menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+        }
+        .mobile-menu.active {
+            right: 0;
+        }
+        .mobile-menu-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .mobile-menu-logo {
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+        }
+        .close-menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            line-height: 1;
+            transition: transform 0.3s;
+        }
+        .close-menu-btn:hover {
+            transform: rotate(90deg);
+            color: var(--primary);
+        }
+        .mobile-menu-items {
+            padding: 2rem 0;
+        }
+        .mobile-menu-items a {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
             transition: all 0.3s;
+            border-left: 3px solid transparent;
+        }
+        .mobile-menu-items a i {
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            width: 25px;
+        }
+        .mobile-menu-items a:hover,
+        .mobile-menu-items a.active {
+            background: rgba(255, 107, 53, 0.1);
+            border-left-color: var(--primary);
+            color: white;
+            padding-left: 2rem;
+        }
+        .mobile-menu-footer {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: auto;
+        }
+        .mobile-social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .mobile-social-links a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 107, 53, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        .mobile-social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
         }
 
         /* HERO */
@@ -183,7 +344,7 @@
             box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
         }
         .hero-btn:hover {
-            transform: translate  translateY(-3px);
+            transform: translateY(-3px);
             box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
         }
         @keyframes fadeInUp {
@@ -433,22 +594,26 @@
         }
 
         /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .menu-toggle { display: flex; }
-            .hero-content h1 { font-size: 2.5rem; }
+        @media (max-width: 992px) {
+            .header { display: none; }
+            .mobile-header { display: block; }
+            .hero-section { margin-top: 70px; }
+            .hero-content h1 { font-size: 3rem; }
             .section-title { font-size: 2.5rem; }
-            .products-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+        }
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .products-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 576px) {
             .hero-content h1 { font-size: 2rem; }
-            .products-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
+    <!-- DESKTOP HEADER -->
     <header class="header">
         <nav class="nav-container">
             <div class="logo">
@@ -456,7 +621,7 @@
             </div>
             <ul class="nav-links">
                 <li><a href="../index.html">Trang Chủ</a></li>
-                <li><a href="index.html">Thực Đơn</a></li>
+                <li><a href="index.html" class="active">Thực Đơn</a></li>
                 <li><a href="../gioi-thieu-ve-bun-thit-nuong-bama/">Giới Thiệu</a></li>
                 <li><a href="../lien-he-bun-thit-nuong-bama/">Liên Hệ</a></li>
                 <li>
@@ -466,11 +631,60 @@
                     </div>
                 </li>
             </ul>
-            <button class="menu-toggle" onclick="toggleMobileMenu()">
-                <span></span><span></span><span></span>
-            </button>
         </nav>
     </header>
+
+    <!-- MOBILE HEADER -->
+    <div class="mobile-header">
+        <div class="mobile-nav-container">
+            <div class="mobile-logo">
+                <img src="../image/logo.png" alt="BaMa Logo">
+            </div>
+            <div class="mobile-actions">
+                <div class="cart-icon-wrapper" onclick="showCart()">
+                    <i class="fas fa-shopping-cart mobile-cart-icon"></i>
+                    <span class="cart-badge" id="cartCountMobile">0</span>
+                </div>
+                <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOBILE MENU OVERLAY -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
+
+    <!-- MOBILE MENU SIDEBAR -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <div class="mobile-menu-logo">BaMa</div>
+            <button class="close-menu-btn" onclick="closeMobileMenu()">×</button>
+        </div>
+        <div class="mobile-menu-items">
+            <a href="../index.html" onclick="closeMobileMenu()">
+                <i class="fas fa-home"></i> Trang Chủ
+            </a>
+            <a href="index.html" onclick="closeMobileMenu()" class="active">
+                <i class="fas fa-utensils"></i> Thực Đơn
+            </a>
+            <a href="../gioi-thieu-ve-bun-thit-nuong-bama/" onclick="closeMobileMenu()">
+                <i class="fas fa-info-circle"></i> Giới Thiệu
+            </a>
+            <a href="../lien-he-bun-thit-nuong-bama/" onclick="closeMobileMenu()">
+                <i class="fas fa-phone"></i> Liên Hệ
+            </a>
+        </div>
+        <div class="mobile-menu-footer">
+            <div class="mobile-social-links">
+                <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+    </div>
 
     <!-- HERO -->
     <section class="hero-section">
@@ -495,10 +709,10 @@
 
             <!-- Filter Buttons -->
             <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all"><span>Noodles Tất Cả</span></button>
-                <button class="filter-btn" data-filter="bun-thit-nuong"><span>Chopsticks Bún Thịt Nướng</span></button>
-                <button class="filter-btn" data-filter="bun-dac-biet"><span>Star Bún Đặc Biệt</span></button>
-                <button class="filter-btn" data-filter="com-chien"><span>Bowl Cơm Chiên</span></button>
+                <button class="filter-btn active" data-filter="all"><span> Tất Cả</span></button>
+                <button class="filter-btn" data-filter="bun-thit-nuong"><span> Bún Thịt Nướng</span></button>
+                <button class="filter-btn" data-filter="bun-dac-biet"><span> Bún Đặc Biệt</span></button>
+                <button class="filter-btn" data-filter="com-chien"><span> Cơm Chiên</span></button>
             </div>
 
             <!-- Products Grid -->
@@ -514,16 +728,16 @@
             <div class="footer-section">
                 <h3>Liên Hệ</h3>
                 <p>052.8934.340</p>
-                <p>Clock Mở cửa: 15:00 - 22:00</p>
+                <p>Mở cửa: 15:00 - 22:00</p>
                 <p>support@bama.vn</p>
                 <p>45/25/20/41B Trần Thái Tông, TPHCM</p>
             </div>
             <div class="footer-section">
                 <h3>Đường Dẫn Nhanh</h3>
-                <a href="index.html">Trang Chủ</a>
-                <a href="products.html">Thực Đơn</a>
-                <a href="about.html">Giới Thiệu</a>
-                <a href="contact.html">Liên Hệ</a>
+                <a href="../index.html">Trang Chủ</a>
+                <a href="index.html">Thực Đơn</a>
+                <a href="../gioi-thieu-ve-bun-thit-nuong-bama/">Giới Thiệu</a>
+                <a href="../lien-he-bun-thit-nuong-bama/">Liên Hệ</a>
             </div>
             <div class="footer-section">
                 <h3>Giờ Mở Cửa</h3>
@@ -565,16 +779,20 @@
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Dữ liệu sản phẩm (dễ chỉnh sửa)
+        // Dữ liệu sản phẩm
         const products = [
-            { name: "Bún Thịt Nướng Đặc Biệt", price: 55000, category: "bun-dac-biet", image: "bun-dac-biet.jpg", is_special: true },
-            { name: "Bún Thịt Nướng Truyền Thống", price: 45000, category: "bun-thit-nuong", image: "bun-thit-nuong.jpg", is_special: true },
-            { name: "Bún Thịt Nướng Tôm", price: 60000, category: "bun-thit-nuong", image: "bun-tom.jpg", is_special: false },
-            { name: "Bún Thịt Nướng Bò", price: 65000, category: "bun-thit-nuong", image: "bun-bo.jpg", is_special: false },
-            { name: "Cơm Chiên Dương Châu", price: 50000, category: "com-chien", image: "com-chien.jpg", is_special: true },
-            { name: "Cơm Chiên Hải Sản", price: 70000, category: "com-chien", image: "com-hai-san.jpg", is_special: false },
-            { name: "Bún Đặc Biệt Full Topping", price: 75000, category: "bun-dac-biet", image: "bun-full.jpg", is_special: true },
-            { name: "Bún Thịt Nướng Nem", price: 58000, category: "bun-thit-nuong", image: "bun-nem.jpg", is_special: false }
+            { name: "Bún Thịt Nướng", price: 38000, category: "bun-thit-nuong", image: "../../uploads/product/68f2f94202132-anhsanphambunthitnuong.jpg", badge: "Phổ Biến" },
+            { name: "Bún Thịt Nướng Chả Giò", price: 35000, category: "bun-thit-nuong", image: "../../uploads/product/68f2f9610e966-bunthitnuongbama.jpg", badge: "Phổ Biến" },
+            { name: "Bún Thịt Nướng Đầy Đủ", price: 35000, category: "bun-thit-nuong", image: "../../uploads/product/68f2f979a1ffb-bunthitnuongbama1.jpg", badge: "Phổ Biến" },
+            { name: "Combo 3 Bún Thịt", price: 100000, category: "combo", image: "../../uploads/product/68f2fa811e807-bunthitnuongbama.png", badge: "Mới" },
+            { name: "Chả Giò Thêm", price: 5000, category: "dothem", image: "../../uploads/product/68f2fbc8cab7e-z7110859099691_77b7f336838dc4ee3e9b35d050110b1d.jpg" },
+            { name: "Bún Thêm", price: 5000, category: "dothem", image: "../../uploads/product/68f2fc071923c-bunthem.jpg", badge: "Mới" },
+            { name: "Thịt Thêm", price: 15000, category: "dothem", image: "../../uploads/product/68f2fc7585453-bunthitnuongbama1.jpg", badge: "Mới" },
+            { name: "Coca-Cola", price: 15000, category: "nuocngot", image: "../../uploads/product/68f2fd3327e36-cocabunthitnuong.jpg", badge: "Mới" },
+            { name: "Pepsi", price: 15000, category: "nuocngot", image: "../../uploads/product/68f2fd409c905-download.jpg", badge: "Mới" },
+            { name: "Cơm Chiên Dương Châu", price: 35000, category: "com-chien", image: "../../uploads/product/68f2fe26a4eb4-comchien.jpg", badge: "Mới" },
+            { name: "Cơm Chiên Đùi Gà", price: 38000, category: "com-chien", image: "../../uploads/product/68f2fe3ac7844-comchienduiga.jpg", badge: "Mới" },
+            { name: "Sting", price: 15000, category: "nuocngot", image: "../../uploads/product/68f2fe626fbe3-stingbunthitnuongbama.jpg" }
         ];
 
         // Render sản phẩm
@@ -591,7 +809,7 @@
                 
                 item.innerHTML = `
                     <div class="card-img-wrapper">
-                        <img src="/food/uploads/product/${product.image}" alt="${product.name}" class="card-img-top">
+                        <img src="../../uploads/product/${product.image}" alt="${product.name}" class="card-img-top">
                         ${product.is_special ? `<span class="special-badge">${product.category === 'bun-dac-biet' ? 'Special' : (product.category === 'bun-thit-nuong' ? 'Popular' : 'New')}</span>` : ''}
                     </div>
                     <div class="card-body">
@@ -620,6 +838,8 @@
         function updateCartBadge() {
             const count = cart.items.reduce((s, i) => s + i.qty, 0);
             document.getElementById('cartCount').textContent = count;
+            const mobileBadge = document.getElementById('cartCountMobile');
+            if (mobileBadge) mobileBadge.textContent = count;
         }
 
         function addToCart(name, price) {
@@ -645,6 +865,7 @@
                         <div><strong>${item.name}</strong><br><small>${item.qty} x ${formatVND(item.price)}</small></div>
                         <div class="text-end"><strong>${formatVND(item.price * item.qty)}</strong><br>
                             <button class="btn btn-sm btn-outline-secondary" onclick="changeQty('${item.name}', -1)">-</button>
+                            <span class="mx-1">${item.qty}</span>
                             <button class="btn btn-sm btn-outline-secondary" onclick="changeQty('${item.name}', 1)">+</button>
                             <button class="btn btn-sm btn-link text-danger" onclick="removeItem('${item.name}')">x</button>
                         </div>`;
@@ -701,11 +922,31 @@
             return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + 'đ';
         }
 
+        // Mobile Menu Control
         function toggleMobileMenu() {
-            const nav = document.querySelector('.nav-links');
-            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+            const menu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const btn = document.getElementById('hamburgerBtn');
+            
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            btn.classList.toggle('active');
+            
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
         }
 
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const btn = document.getElementById('hamburgerBtn');
+            
+            menu.classList.remove('active');
+            overlay.classList.remove('active');
+            btn.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Scroll header
         window.addEventListener('scroll', () => {
             document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 50);
         });

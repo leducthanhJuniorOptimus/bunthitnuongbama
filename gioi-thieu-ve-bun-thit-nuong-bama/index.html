@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="/food/image/logo.png">
+    <link rel="icon" type="image/png" href="../image/logo.png">
     <style>
         * {
             margin: 0;
@@ -29,7 +29,7 @@
             overflow-x: hidden;
         }
 
-        /* HEADER */
+        /* HEADER DESKTOP */
         .header {
             position: fixed;
             top: 0;
@@ -80,10 +80,12 @@
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             transition: width 0.3s;
         }
-        .nav-links a:hover {
+        .nav-links a:hover,
+        .nav-links a.active {
             color: var(--primary);
         }
-        .nav-links a:hover::after {
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
             width: 100%;
         }
         .cart-icon-wrapper {
@@ -112,19 +114,178 @@
             min-width: 18px;
             text-align: center;
         }
-        .menu-toggle {
+
+        /* MOBILE HEADER */
+        .mobile-header {
             display: none;
-            flex-direction: column;
-            gap: 5px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            z-index: 1000;
+            padding: 1rem 1.5rem;
+        }
+        .mobile-nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .mobile-logo img {
+            height: 40px;
+            object-fit: contain;
+        }
+        .mobile-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .mobile-cart-icon {
+            position: relative;
+            font-size: 1.3rem;
+            color: var(--text);
             cursor: pointer;
+        }
+        .hamburger-btn {
             background: none;
             border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 1001;
         }
-        .menu-toggle span {
-            width: 25px;
+        .hamburger-btn span {
+            width: 28px;
             height: 3px;
             background: var(--primary);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        .hamburger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* MOBILE MENU SIDEBAR */
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .mobile-menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+        }
+        .mobile-menu.active {
+            right: 0;
+        }
+        .mobile-menu-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .mobile-menu-logo {
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+        }
+        .close-menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            line-height: 1;
+            transition: transform 0.3s;
+        }
+        .close-menu-btn:hover {
+            transform: rotate(90deg);
+            color: var(--primary);
+        }
+        .mobile-menu-items {
+            padding: 2rem 0;
+        }
+        .mobile-menu-items a {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
             transition: all 0.3s;
+            border-left: 3px solid transparent;
+        }
+        .mobile-menu-items a i {
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            width: 25px;
+        }
+        .mobile-menu-items a:hover,
+        .mobile-menu-items a.active {
+            background: rgba(255, 107, 53, 0.1);
+            border-left-color: var(--primary);
+            color: white;
+            padding-left: 2rem;
+        }
+        .mobile-menu-footer {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: auto;
+        }
+        .mobile-social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .mobile-social-links a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 107, 53, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        .mobile-social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
         }
 
         /* HERO */
@@ -180,7 +341,7 @@
             font-weight: 600;
             margin-top: 2rem;
             transition: all 0.3s;
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+             box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
         }
         .hero-btn:hover {
             transform: translateY(-3px);
@@ -359,6 +520,7 @@
             background: var(--dark);
             color: white;
             padding: 5rem 2rem 2rem;
+            margin-top: 100px;
         }
         .footer-content {
             max-width: 1400px;
@@ -389,19 +551,26 @@
         }
 
         /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .menu-toggle { display: flex; }
-            .hero-content h1 { font-size: 2.5rem; }
+        @media (max-width: 992px) {
+            .header { display: none; }
+            .mobile-header { display: block; }
+            .hero-section { margin-top: 70px; }
+            .hero-content h1 { font-size: 3rem; }
             .about-header h2 { font-size: 2.5rem; }
+        }
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
             .timeline-wrapper { flex-direction: column; gap: 50px; }
             .timeline-item { min-width: 100%; max-width: 100%; }
+        }
+        @media (max-width: 576px) {
+            .hero-content h1 { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
+    <!-- DESKTOP HEADER -->
     <header class="header">
         <nav class="nav-container">
             <div class="logo">
@@ -410,7 +579,7 @@
             <ul class="nav-links">
                 <li><a href="../index.html">Trang Chủ</a></li>
                 <li><a href="../san-pham-bun-thit-nuong/">Thực Đơn</a></li>
-                <li><a href="index.html">Giới Thiệu</a></li>
+                <li><a href="index.html" class="active">Giới Thiệu</a></li>
                 <li><a href="../lien-he-bun-thit-nuong-bama/">Liên Hệ</a></li>
                 <li>
                     <div class="cart-icon-wrapper" onclick="showCart()">
@@ -419,11 +588,60 @@
                     </div>
                 </li>
             </ul>
-            <button class="menu-toggle" onclick="toggleMobileMenu()">
-                <span></span><span></span><span></span>
-            </button>
         </nav>
     </header>
+
+    <!-- MOBILE HEADER -->
+    <div class="mobile-header">
+        <div class="mobile-nav-container">
+            <div class="mobile-logo">
+                <img src="../image/logo.png" alt="BaMa Logo">
+            </div>
+            <div class="mobile-actions">
+                <div class="cart-icon-wrapper" onclick="showCart()">
+                    <i class="fas fa-shopping-cart mobile-cart-icon"></i>
+                    <span class="cart-badge" id="cartCountMobile">0</span>
+                </div>
+                <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOBILE MENU OVERLAY -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
+
+    <!-- MOBILE MENU SIDEBAR -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <div class="mobile-menu-logo">BaMa</div>
+            <button class="close-menu-btn" onclick="closeMobileMenu()">×</button>
+        </div>
+        <div class="mobile-menu-items">
+            <a href="../index.html" onclick="closeMobileMenu()">
+                <i class="fas fa-home"></i> Trang Chủ
+            </a>
+            <a href="../san-pham-bun-thit-nuong/" onclick="closeMobileMenu()">
+                <i class="fas fa-utensils"></i> Thực Đơn
+            </a>
+            <a href="index.html" onclick="closeMobileMenu()" class="active">
+                <i class="fas fa-info-circle"></i> Giới Thiệu
+            </a>
+            <a href="../lien-he-bun-thit-nuong-bama/" onclick="closeMobileMenu()">
+                <i class="fas fa-phone"></i> Liên Hệ
+            </a>
+        </div>
+        <div class="mobile-menu-footer">
+            <div class="mobile-social-links">
+                <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+    </div>
 
     <!-- HERO -->
     <section class="hero-section">
@@ -441,20 +659,20 @@
 
     <!-- ABOUT SECTION -->
     <section class="about-section" id="about">
-        <div class="container">
+        <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
             <div class="text-center mb-5">
                 <div class="about-header">
                     <h2>Về Chúng Tôi</h2>
                 </div>
                 <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-                    Bún Thịt Nướng <span class="text-orange-500 font-bold">BaMa</span> được sinh ra từ niềm đam mê với ẩm thực Việt và khát vọng mang đến trải nghiệm đậm đà hương vị truyền thống – hiện đại.
+                    Bún Thịt Nướng <span style="color: var(--primary); font-weight: bold;">BaMa</span> được sinh ra từ niềm đam mê với ẩm thực Việt và khát vọng mang đến trải nghiệm đậm đà hương vị truyền thống – hiện đại.
                 </p>
             </div>
 
             <div class="row g-4">
                 <div class="col-md-4">
                     <div class="feature-card text-center">
-                        <div class="mx-auto w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-400 rounded-full flex items-center justify-center text-4xl shadow-lg mb-4">
+                        <div class="mx-auto w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-400 rounded-full flex items-center justify-center text-4xl shadow-lg mb-4" style="width: 80px; height: 80px;">
                             Noodles
                         </div>
                         <h3 class="text-xl font-bold mb-3">Công Thức Độc Quyền</h3>
@@ -463,7 +681,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="feature-card text-center">
-                        <div class="mx-auto w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-400 rounded-full flex items-center justify-center text-4xl shadow-lg mb-4">
+                        <div class="mx-auto w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-400 rounded-full flex items-center justify-center text-4xl shadow-lg mb-4" style="width: 80px; height: 80px;">
                             Leaf
                         </div>
                         <h3 class="text-xl font-bold mb-3">Nguyên Liệu Tươi Ngon</h3>
@@ -472,7 +690,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="feature-card text-center">
-                        <div class="mx-auto w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-400 rounded-full flex items-center justify-center text-4xl shadow-lg mb-4">
+                        <div class="mx-auto w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-400 rounded-full flex items-center justify-center text-4xl shadow-lg mb-4" style="width: 80px; height: 80px;">
                             Heart
                         </div>
                         <h3 class="text-xl font-bold mb-3">Phục Vụ Tận Tâm</h3>
@@ -485,9 +703,11 @@
 
     <!-- TIMELINE -->
     <section class="timeline-section">
-        <div class="container">
+        <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
             <div class="text-center mb-5">
-                <h2 class="inline-block text-4xl font-bold text-gray-800">Hành Trình Phát Triển</h2>
+                <h2 style="font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; color: #2d3748; position: relative; display: inline-block;">
+                    Hành Trình Phát Triển
+                </h2>
             </div>
             <div class="position-relative">
                 <div class="timeline-line"></div>
@@ -553,16 +773,16 @@
             <div class="footer-section">
                 <h3>Liên Hệ</h3>
                 <p>052.8934.340</p>
-                <p>⏰ Mở cửa: 15:00 - 22:00</p>
+                <p>Mở cửa: 15:00 - 22:00</p>
                 <p>support@bama.vn</p>
                 <p>45/25/20/41B Trần Thái Tông, TPHCM</p>
             </div>
             <div class="footer-section">
                 <h3>Đường Dẫn Nhanh</h3>
-                <a href="index.html">Trang Chủ</a>
-                <a href="index.html#product">Thực Đơn</a>
-                <a href="about.html">Giới Thiệu</a>
-                <a href="index.html#contact">Liên Hệ</a>
+                <a href="../index.html">Trang Chủ</a>
+                <a href="../san-pham-bun-thit-nuong/">Thực Đơn</a>
+                <a href="index.html">Giới Thiệu</a>
+                <a href="../lien-he-bun-thit-nuong-bama/">Liên Hệ</a>
             </div>
             <div class="footer-section">
                 <h3>Giờ Mở Cửa</h3>
@@ -604,22 +824,15 @@
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Giỏ hàng
         const CART_KEY = 'bama_cart';
         let cart = JSON.parse(localStorage.getItem(CART_KEY)) || { items: [], total: 0 };
 
         function updateCartBadge() {
             const count = cart.items.reduce((s, i) => s + i.qty, 0);
             document.getElementById('cartCount').textContent = count;
-        }
-
-        function addToCart(name, price) {
-            const existing = cart.items.find(i => i.name === name);
-            if (existing) existing.qty++;
-            else cart.items.push({ name, price, qty: 1 });
-            cart.total = cart.items.reduce((s, i) => s + i.price * i.qty, 0);
-            localStorage.setItem(CART_KEY, JSON.stringify(cart));
-            updateCartBadge();
-            showToast('Đã thêm vào giỏ hàng!');
+            const mobileBadge = document.getElementById('cartCountMobile');
+            if (mobileBadge) mobileBadge.textContent = count;
         }
 
         function showCart() {
@@ -635,6 +848,7 @@
                         <div><strong>${item.name}</strong><br><small>${item.qty} x ${formatVND(item.price)}</small></div>
                         <div class="text-end"><strong>${formatVND(item.price * item.qty)}</strong><br>
                             <button class="btn btn-sm btn-outline-secondary" onclick="changeQty('${item.name}', -1)">-</button>
+                            <span class="mx-1">${item.qty}</span>
                             <button class="btn btn-sm btn-outline-secondary" onclick="changeQty('${item.name}', 1)">+</button>
                             <button class="btn btn-sm btn-link text-danger" onclick="removeItem('${item.name}')">x</button>
                         </div>`;
@@ -691,15 +905,36 @@
             return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + 'đ';
         }
 
+        // Mobile Menu Control
         function toggleMobileMenu() {
-            const nav = document.querySelector('.nav-links');
-            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+            const menu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const btn = document.getElementById('hamburgerBtn');
+            
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            btn.classList.toggle('active');
+            
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
         }
 
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const btn = document.getElementById('hamburgerBtn');
+            
+            menu.classList.remove('active');
+            overlay.classList.remove('active');
+            btn.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Scroll header
         window.addEventListener('scroll', () => {
             document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 50);
         });
 
+        // Khởi tạo
         updateCartBadge();
     </script>
 </body>
