@@ -127,8 +127,8 @@
             text-align: center;
         }
 
-        /* MOBILE MENU - COPY TỪ FILE PHP */
-        .mobilemenu {
+        /* MOBILE HEADER */
+        .mobile-header {
             display: none;
             position: fixed;
             top: 0;
@@ -136,115 +136,191 @@
             right: 0;
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
-            z-index: 1001;
-            padding: 1rem;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            z-index: 1000;
+            padding: 1rem 1.5rem;
         }
-        .mobilemenu nav {
+        
+        .mobile-nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        #menuToggle {
-            display: block;
-            position: relative;
-            z-index: 1;
-            -webkit-user-select: none;
-            user-select: none;
+
+        .mobile-logo img {
+            height: 40px;
+            object-fit: contain;
         }
-        #menuToggle input {
-            display: block;
-            width: 40px;
-            height: 32px;
-            position: absolute;
-            top: -7px;
-            left: -5px;
+
+        .mobile-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .mobile-cart-icon {
+            position: relative;
+            font-size: 1.3rem;
+            color: var(--text);
             cursor: pointer;
-            opacity: 0;
-            z-index: 2;
         }
-        #menuToggle span {
-            display: block;
-            width: 33px;
-            height: 4px;
-            margin-bottom: 5px;
-            position: relative;
+
+        .hamburger-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 1001;
+        }
+
+        .hamburger-btn span {
+            width: 28px;
+            height: 3px;
             background: var(--primary);
             border-radius: 3px;
-            z-index: 1;
-            transform-origin: 4px 0px;
-            transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-                        background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-                        opacity 0.55s ease;
+            transition: all 0.3s ease;
         }
-        #menuToggle span:first-child {
-            transform-origin: 0% 0%;
+
+        .hamburger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
         }
-        #menuToggle span:nth-last-child(2) {
-            transform-origin: 0% 100%;
-        }
-        #menuToggle input:checked ~ span {
-            opacity: 1;
-            transform: rotate(45deg) translate(-2px, -1px);
-            background: #fff;
-        }
-        #menuToggle input:checked ~ span:nth-last-child(3) {
+
+        .hamburger-btn.active span:nth-child(2) {
             opacity: 0;
-            transform: rotate(0deg) scale(0.2, 0.2);
         }
-        #menuToggle input:checked ~ span:nth-last-child(2) {
-            transform: rotate(-45deg) translate(0, -1px);
+
+        .hamburger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
         }
-        #menu {
-            position: absolute;
-            width: 300px;
-            margin: -100px 0 0 -50px;
-            padding: 50px;
-            padding-top: 125px;
-            background: var(--dark);
-            list-style-type: none;
-            -webkit-font-smoothing: antialiased;
-            transform-origin: 0% 0%;
-            transform: translate(-100%, 0);
-            transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
-            border-radius: 0 20px 20px 0;
-            box-shadow: 10px 0 30px rgba(0,0,0,0.3);
-        }
-        #menu li {
-            padding: 10px 0;
-            font-size: 1.3rem;
-        }
-        #menu a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        #menu a:hover {
-            color: var(--primary);
-        }
-        #menuToggle input:checked ~ ul {
-            transform: none;
-        }
-        .menu-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            color: white;
-            font-size: 1.8rem;
-            cursor: pointer;
-            font-weight: bold;
-            z-index: 3;
-        }
-        .menu-overlay {
+
+        /* MOBILE MENU SIDEBAR */
+        .mobile-menu-overlay {
             display: none;
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-        #menuToggle input:checked ~ .menu-overlay {
+
+        .mobile-menu-overlay.active {
             display: block;
+            opacity: 1;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-menu-logo {
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+        }
+
+        .close-menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            line-height: 1;
+            transition: transform 0.3s;
+        }
+
+        .close-menu-btn:hover {
+            transform: rotate(90deg);
+            color: var(--primary);
+        }
+
+        .mobile-menu-items {
+            padding: 2rem 0;
+        }
+
+        .mobile-menu-items a {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+        }
+
+        .mobile-menu-items a i {
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            width: 25px;
+        }
+
+        .mobile-menu-items a:hover {
+            background: rgba(255, 107, 53, 0.1);
+            border-left-color: var(--primary);
+            color: white;
+            padding-left: 2rem;
+        }
+
+        .mobile-menu-footer {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: auto;
+        }
+
+        .mobile-social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .mobile-social-links a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 107, 53, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .mobile-social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
         }
 
         /* HERO */
@@ -560,47 +636,42 @@
         }
 
         /* FLOATING BUTTONS */
-        .lienketthuongmai {
+        .floating-buttons {
             position: fixed;
             bottom: 100px;
-            right: 20px;
+            right: 30px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 1rem;
             z-index: 999;
-            animation: slideInRight 0.5s ease-out;
         }
         .commerce-link {
-            position: relative;
             width: 60px;
             height: 60px;
-            background: white;
             border-radius: 50%;
+            background: white;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             overflow: hidden;
             border: 3px solid #fff;
+            position: relative;
         }
         .commerce-link img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 50%;
         }
         .commerce-link:hover {
-            transform: scale(1.15) rotate(5deg);
+            transform: scale(1.15);
             box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
             border-color: var(--primary);
         }
         .phone-link {
             background: linear-gradient(135deg, #25D366, #128C7E);
             color: white;
-            animation: phoneShake 3s ease-in-out 2s infinite;
-        }
-        .phone-link i {
             font-size: 1.5rem;
         }
         .tooltip {
@@ -618,31 +689,12 @@
             font-weight: 500;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
-        .tooltip::after {
-            content: '';
-            position: absolute;
-            right: -8px;
-            top: 50%;
-            transform: translateY(-50%);
-            border: 8px solid transparent;
-            border-left-color: #2d3748;
-        }
         .commerce-link:hover .tooltip {
             opacity: 1;
             right: 80px;
         }
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(100px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes phoneShake {
-            0%, 100% { transform: rotate(0deg); }
-            2%, 6%, 10% { transform: rotate(-15deg); }
-            4%, 8%, 12% { transform: rotate(15deg); }
-            14% { transform: rotate(0deg); }
-        }
 
-        /* CART OVERLAY */
+        /* CART OVERLAY & MODAL */
         .cart-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -829,27 +881,84 @@
 
         /* RESPONSIVE */
         @media (max-width: 992px) {
-            .nav-links { display: none; }
-            .mobilemenu { display: block; }
+            .header { display: none; }
+            .mobile-header { display: block; }
             .hero { margin-top: 70px; }
-            .hero-title { font-size: 3.5rem; }
-            .hero-subtitle { font-size: 1.3rem; }
-            .section-title { font-size: 2.8rem; }
-            .lienketthuongmai { bottom: 80px; right: 15px; gap: 12px; }
+            .hero-title { font-size: 3rem; }
+            .hero-subtitle { font-size: 1.2rem; }
+            .section-title { font-size: 2.5rem; }
+            .product-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
+            .floating-buttons { bottom: 80px; right: 15px; }
             .commerce-link { width: 50px; height: 50px; }
-            .phone-link i { font-size: 1.3rem; }
             .tooltip { display: none; }
         }
-        @media (max-width: 576px) {
-            .lienketthuongmai { bottom: 70px; right: 10px; }
-            .commerce-link { width: 45px; height: 45px; }
-            .phone-link i { font-size: 1.1rem; }
+
+        @media (max-width: 768px) {
+            .product-grid { grid-template-columns: 1fr; }
+        }
+         .hero-section {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.85), rgba(22, 33, 62, 0.75));
+            z-index: 2;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: white;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+        .hero-btn {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 2rem;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER DESKTOP -->
+    <!-- DESKTOP HEADER -->
     <header class="header">
         <nav class="nav-container">
             <div class="logo">
@@ -870,45 +979,69 @@
         </nav>
     </header>
 
-    <!-- MOBILE MENU -->
-    <div class="mobilemenu">
-        <nav role="navigation">
-            <div id="menuToggle">
-                <input type="checkbox" id="menuCheckbox" />
-                <span></span>
-                <span></span>
-                <span></span>
-                
-                <ul id="menu">
-                    <div class="menu-close" onclick="closeMenu()">X</div>
-                    <li><a href="index.html" onclick="closeMenu()">Trang Chủ</a></li>
-                    <li><a href="san-pham-bun-thit-nuong/" onclick="closeMenu()">Thực Đơn</a></li>
-                    <li><a href="gioi-thieu-ve-bun-thit-nuong-bama/" onclick="closeMenu()">Giới Thiệu</a></li>
-                    <li><a href="lien-he-bun-thit-nuong-bama/" onclick="closeMenu()">Liên Hệ</a></li>
-                </ul>
-                
-                <div class="menu-overlay" onclick="closeMenu()"></div>
+    <!-- MOBILE HEADER -->
+    <div class="mobile-header">
+        <div class="mobile-nav-container">
+            <div class="mobile-logo">
+                <img src="image/logo.png" alt="BaMa Logo">
             </div>
+            <div class="mobile-actions">
+                <div class="cart-icon-wrapper" onclick="toggleCart()">
+                    <i class="fas fa-shopping-cart mobile-cart-icon"></i>
+                    <span class="cart-badge" id="cartCountMobile">0</span>
+                </div>
+                <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </div>
 
-            <div class="menu-logo">
-                <img src="image/logo.png" alt="logo bún thịt nướng bama">
-            </div>
+    <!-- MOBILE MENU OVERLAY -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
 
-            <div class="menu-social">
-                <a href="#" id="cartIcon" onclick="toggleCart(); closeMenu(); event.preventDefault();">
-                    <img src="image/cart.png" alt="giỏ hàng" style="width:24px;height:24px;">
-                    <span id="cartCountMobile" class="cart-badge">0</span>
-                </a>
+    <!-- MOBILE MENU SIDEBAR -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <div class="mobile-menu-logo">BaMa</div>
+            <button class="close-menu-btn" onclick="closeMobileMenu()">×</button>
+        </div>
+        <div class="mobile-menu-items">
+            <a href="index.html" onclick="closeMobileMenu()">
+                <i class="fas fa-home"></i> Trang Chủ
+            </a>
+            <a href="san-pham-bun-thit-nuong/" onclick="closeMobileMenu()">
+                <i class="fas fa-utensils"></i> Thực Đơn
+            </a>
+            <a href="gioi-thieu-ve-bun-thit-nuong-bama/" onclick="closeMobileMenu()">
+                <i class="fas fa-info-circle"></i> Giới Thiệu
+            </a>
+            <a href="lien-he-bun-thit-nuong-bama/" onclick="closeMobileMenu()">
+                <i class="fas fa-phone"></i> Liên Hệ
+            </a>
+        </div>
+        <div class="mobile-menu-footer">
+            <div class="mobile-social-links">
+                <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
             </div>
-        </nav>
+        </div>
     </div>
 
     <!-- HERO -->
-    <section class="hero" id="home">
+<section class="hero-section">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="image/videocokking.mp4" type="video/mp4">
+            Trình duyệt không hỗ trợ video.
+        </video>
+        <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1 class="hero-title">Bún Thịt Nướng BaMa</h1>
-            <p class="hero-subtitle">Hương vị truyền thống - Đẳng cấp hiện đại</p>
-            <a href="#product" class="cta-button">Khám Phá Thực Đơn</a>
+            <h1>Bún Thịt Nướng Bama  </h1>
+            <p>Chúng tôi luôn sẵn sàng hỗ trợ bạn</p>
+            <a href="#contact" class="hero-btn">Xem Thực Đơn</a>
         </div>
     </section>
 
@@ -931,9 +1064,7 @@
                 <button class="filter-btn" data-filter="nuocngot">Nước Ngọt</button>
             </div>
         </div>
-        <div class="product-grid" id="productGrid">
-            <!-- JS sẽ render -->
-        </div>
+        <div class="product-grid" id="productGrid"></div>
     </section>
 
     <!-- WHY CHOOSE -->
@@ -971,10 +1102,10 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Liên Hệ</h3>
-                <p>052.8934.340</p>
-                <p>Clock Mở cửa: 15:00 - 22:00</p>
-                <p>support@bama.vn</p>
-                <p>45/25/20/41B Trần Thái Tông, TPHCM</p>
+                <p>📞 052.8934.340</p>
+                <p>⏰ Mở cửa: 15:00 - 22:00</p>
+                <p>✉️ support@bama.vn</p>
+                <p>📍 45/25/20/41B Trần Thái Tông, TPHCM</p>
                 <div class="social-links">
                     <a href="https://facebook.com" class="social-link" target="_blank"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://instagram.com" class="social-link" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -993,7 +1124,7 @@
                 <p>Thứ 2 - Chủ Nhật</p>
                 <p>15:00 - 22:00</p>
                 <p style="margin-top: 1.5rem; font-weight: 600; color: var(--primary);">Đặt hàng qua:</p>
-                <p>Grab | Be | ShopeeFood</p>
+                <p>🛵 Grab | Be | ShopeeFood</p>
             </div>
             <div class="footer-section">
                 <h3>Về Chúng Tôi</h3>
@@ -1002,13 +1133,13 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 Bún Thịt Nướng BaMa. Được làm với tại Sài Gòn</p>
+            <p>© 2025 Bún Thịt Nướng BaMa. Được làm với ❤️ tại Sài Gòn</p>
         </div>
     </footer>
 
     <!-- FLOATING BUTTONS -->
-    <div class="lienketthuongmai">
-        <a href="#" class="commerce-link" aria-label="Đặt qua Be">
+    <div class="floating-buttons">
+        <a href="#" class="commerce-link">
             <img src="image/bunthitnuongbe.jpeg" alt="Be">
             <span class="tooltip">Đặt qua Be</span>
         </a>
@@ -1027,14 +1158,14 @@
     </div>
 
     <!-- CART MODAL -->
-    <div class="cart-overlay" id="cartOverlay">
+    <div class="cart-overlay" id="cartOverlay" onclick="closeCartOnOverlay(event)">
         <div class="cart-modal">
             <div class="cart-header">
                 <h3>Giỏ Hàng Của Bạn</h3>
                 <button class="close-cart" onclick="toggleCart()">×</button>
             </div>
             <div class="cart-items" id="cartItems">
-                <p class="text-center text-muted">Giỏ hàng trống.</p>
+                <p style="text-align:center;color:#999;padding:2rem;">Giỏ hàng trống.</p>
             </div>
             <div class="cart-total" id="cartTotal">Tổng: 0đ</div>
             <button class="checkout-btn" id="checkoutBtn">Đặt Hàng</button>
@@ -1044,10 +1175,48 @@
     <!-- TOAST -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- JS -->
     <script>
         // Dữ liệu sản phẩm
-        const products = [/* ... giữ nguyên như trước ... */];
+        const products = [
+            { name: "Bún Thịt Nướng", price: 38000, category: "bun-thit-nuong", image: "uploads/product/68f2f94202132-anhsanphambunthitnuong.jpg", badge: "Phổ Biến" },
+            { name: "Bún Thịt Nướng Chả Giò", price: 35000, category: "bun-thit-nuong", image: "uploads/product/68f2f9610e966-bunthitnuongbama.jpg", badge: "Phổ Biến" },
+            { name: "Bún Thịt Nướng Đầy Đủ", price: 35000, category: "bun-thit-nuong", image: "uploads/product/68f2f979a1ffb-bunthitnuongbama1.jpg", badge: "Phổ Biến" },
+            { name: "Combo 3 Bún Thịt", price: 100000, category: "combo", image: "uploads/product/68f2fa811e807-bunthitnuongbama.png", badge: "Mới" },
+            { name: "Chả Giò Thêm", price: 5000, category: "dothem", image: "uploads/product/68f2fbc8cab7e-z7110859099691_77b7f336838dc4ee3e9b35d050110b1d.jpg" },
+            { name: "Bún Thêm", price: 5000, category: "dothem", image: "uploads/product/68f2fc071923c-bunthem.jpg", badge: "Mới" },
+            { name: "Thịt Thêm", price: 15000, category: "dothem", image: "uploads/product/68f2fc7585453-bunthitnuongbama1.jpg", badge: "Mới" },
+            { name: "Coca-Cola", price: 15000, category: "nuocngot", image: "uploads/product/68f2fd3327e36-cocabunthitnuong.jpg", badge: "Mới" },
+            { name: "Pepsi", price: 15000, category: "nuocngot", image: "uploads/product/68f2fd409c905-download.jpg", badge: "Mới" },
+            { name: "Cơm Chiên Dương Châu", price: 35000, category: "com-chien", image: "uploads/product/68f2fe26a4eb4-comchien.jpg", badge: "Mới" },
+            { name: "Cơm Chiên Đùi Gà", price: 38000, category: "com-chien", image: "uploads/product/68f2fe3ac7844-comchienduiga.jpg", badge: "Mới" },
+            { name: "Sting", price: 15000, category: "nuocngot", image: "uploads/product/68f2fe626fbe3-stingbunthitnuongbama.jpg" }
+        ];
+
+        // Render sản phẩm
+        function renderProducts(filter = 'all') {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+            filtered.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.dataset.category = product.category;
+                card.innerHTML = `
+                    <div class="product-image-container">
+                        <img src="${product.image}" alt="${product.name}" class="product-image">
+                        ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-price">${formatVND(product.price)}</p>
+                        <button class="add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price})">
+                            <i class="fas fa-shopping-cart"></i> Đặt Ngay
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
 
         // Giỏ hàng
         const CART_KEY = 'bama_cart';
@@ -1067,7 +1236,7 @@
             cart.total = cart.items.reduce((s, i) => s + i.price * i.qty, 0);
             localStorage.setItem(CART_KEY, JSON.stringify(cart));
             updateCartBadge();
-            showToast('Đã thêm vào giỏ hàng!');
+            showToast('✅ Đã thêm vào giỏ hàng!');
         }
 
         function toggleCart() {
@@ -1076,36 +1245,145 @@
             if (overlay.classList.contains('active')) renderCartItems();
         }
 
+        function closeCartOnOverlay(e) {
+            if (e.target.id === 'cartOverlay') toggleCart();
+        }
+
         function renderCartItems() {
             const container = document.getElementById('cartItems');
             const totalEl = document.getElementById('cartTotal');
             container.innerHTML = '';
             if (cart.items.length === 0) {
-                container.innerHTML = '<p class="text-center text-muted">Giỏ hàng trống.</p>';
+                container.innerHTML = '<p style="text-align:center;color:#999;padding:2rem;">Giỏ hàng trống.</p>';
                 totalEl.textContent = 'Tổng: 0đ';
                 return;
             }
             cart.items.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'cart-item';
-                div.innerHTML = `...`; // giữ nguyên
+                div.innerHTML = `
+                    <img src="${products.find(p => p.name === item.name)?.image || 'image/placeholder.jpg'}" alt="${item.name}">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">${formatVND(item.price)}</div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <button class="qty-btn" onclick="changeQty('${item.name}', -1)">−</button>
+                        <span style="min-width: 20px; text-align: center;">${item.qty}</span>
+                        <button class="qty-btn" onclick="changeQty('${item.name}', 1)">+</button>
+                        <button class="remove-item" onclick="removeItem('${item.name}')">×</button>
+                    </div>
+                `;
                 container.appendChild(div);
             });
             totalEl.textContent = `Tổng: ${formatVND(cart.total)}`;
         }
 
-        function closeMenu() {
-            document.getElementById('menuCheckbox').checked = false;
+        function changeQty(name, delta) {
+            const item = cart.items.find(i => i.name === name);
+            if (item) {
+                item.qty = Math.max(0, item.qty + delta);
+                if (item.qty === 0) cart.items = cart.items.filter(i => i.name !== name);
+                cart.total = cart.items.reduce((s, i) => s + i.price * i.qty, 0);
+                localStorage.setItem(CART_KEY, JSON.stringify(cart));
+                updateCartBadge();
+                renderCartItems();
+            }
         }
 
-        function showToast(msg) { /* ... */ }
-        function formatVND(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + 'đ'; }
-
-        // Render sản phẩm, filter, scroll, init
-        document.addEventListener('DOMContentLoaded', () => {
-            renderProducts();
+        function removeItem(name) {
+            cart.items = cart.items.filter(i => i.name !== name);
+            cart.total = cart.items.reduce((s, i) => s + i.price * i.qty, 0);
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
             updateCartBadge();
+            renderCartItems();
+        }
+
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            if (cart.items.length === 0) return showToast('⚠️ Giỏ hàng trống!');
+            showToast('🎉 Đặt hàng thành công!');
+            cart = { items: [], total: 0 };
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+            updateCartBadge();
+            toggleCart();
         });
+
+        function showToast(msg) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<i class="fas fa-check-circle"></i><span>${msg}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function formatVND(n) {
+            return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + 'đ';
+        }
+
+        // Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const btn = document.getElementById('hamburgerBtn');
+            
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            btn.classList.toggle('active');
+            
+            // Ngăn scroll body khi menu mở
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const btn = document.getElementById('hamburgerBtn');
+            
+            menu.classList.remove('active');
+            overlay.classList.remove('active');
+            btn.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Filter + Search
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderProducts(btn.dataset.filter);
+            });
+        });
+
+        document.getElementById('searchInput').addEventListener('input', e => {
+            const term = e.target.value.toLowerCase();
+            document.querySelectorAll('.product-card').forEach(card => {
+                const name = card.querySelector('.product-name').textContent.toLowerCase();
+                card.style.display = name.includes(term) ? 'block' : 'none';
+            });
+        });
+
+        // Scroll header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (header) header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    closeMobileMenu();
+                }
+            });
+        });
+
+        // Init
+        renderProducts();
+        updateCartBadge();
     </script>
 </body>
 </html>
